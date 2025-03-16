@@ -4,22 +4,24 @@ interface Event {
   title: string;
   start: Date | string;
   allDay: boolean;
+  room?: string;
+  teacher?: string;
   id: number;
   end?: Date | string;
 }
 
 export function useCalendarEvents() {
 const [events, setEvents] = useState([
-    { title: 'Cálculo 1', id: 1 },
-    { title: 'Mat. Discreta', id: 2 },
-    { title: 'Cálculo 2', id: 3 },
-    { title: 'Álgebra Linear', id: 4 },
-    { title: 'Física 1', id: 5 },
-    { title: 'Física 2', id: 6 },
-    { title: 'Química', id: 7 },
-    { title: 'Biologia', id: 8 },
-    { title: 'História', id: 9 },
-    { title: 'Geografia', id: 10 },
+  { title: 'Cálculo 1', id: 1, room: '101', teacher: 'Prof. Silva' },
+  { title: 'Mat. Discreta', id: 2, room: '102', teacher: 'Prof. Souza' },
+  { title: 'Cálculo 2', id: 3, room: '103', teacher: 'Prof. Lima' },
+  { title: 'Álgebra Linear', id: 4, room: '104', teacher: 'Prof. Costa' },
+  { title: 'Física 1', id: 5, room: '105', teacher: 'Prof. Almeida' },
+  { title: 'Física 2', id: 6, room: '106', teacher: 'Prof. Pereira' },
+  { title: 'Química', id: 7, room: '107', teacher: 'Prof. Fernandes' },
+  { title: 'Biologia', id: 8, room: '108', teacher: 'Prof. Oliveira' },
+  { title: 'História', id: 9, room: '109', teacher: 'Prof. Santos' },
+  { title: 'Geografia', id: 10, room: '110', teacher: 'Prof. Rodrigues' },
 ]);
 
   const [allEvents, setAllEvents] = useState<Event[]>([]);
@@ -35,8 +37,14 @@ const [events, setEvents] = useState([
   };
 
   const handleEventReceive = (info: any) => {
+    console.log('Received event:', info.event);
+    console.log('Extended props:', info.event.extendedProps);
+  
     const startDate = info.event.start || new Date();
-    // Use default duration from calendar config instead of hardcoded 2 hours
+    
+    // Properly access extendedProps
+    const teacher = info.event.extendedProps?.teacher || '';
+    const room = info.event.extendedProps?.room || '';
     
     // Remove the original event
     info.event.remove();
@@ -45,10 +53,12 @@ const [events, setEvents] = useState([
       id: Date.now(),
       title: info.event.title,
       start: startDate,
-      // If no end is specified, the calendar will use defaultTimedEventDuration
-      allDay: false
+      allDay: false,
+      teacher,
+      room
     };
     
+    console.log('New event with props:', newEvent);
     setAllEvents(prev => [...prev, newEvent]);
   };
 

@@ -9,6 +9,8 @@ import { createEventContent } from '@/app/utils/calendarUtils';
 
 interface Event {
     title: string;
+    room?: string;
+    teacher?: string;
     start: Date | string;
     allDay: boolean;
     id: number;
@@ -40,12 +42,10 @@ export const EventCalendar: React.FC<EventCalendarProps> = ({
             eventResize={onEventResize}
             height="100%"
             eventResizeStart={(info) => {
-                // Ensure resize only happens on hour boundaries
                 if (info.event.start) {
                     const startHour = info.event.start.getHours();
                     const startMin = info.event.start.getMinutes();
 
-                    // If not at a full hour, adjust
                     if (startMin !== 0) {
                         const adjustedStart = new Date(info.event.start);
                         adjustedStart.setMinutes(0, 0, 0);
