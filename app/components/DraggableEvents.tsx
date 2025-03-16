@@ -37,11 +37,11 @@ export const DraggableEvents: React.FC<DraggableEventsProps> = ({ events }) => {
     }, []);
 
     return (
-        <div id="draggable-el" className='w-full border-2 p-2 rounded-md bg-violet-100 h-full overflow-y-auto'>
+        <div id="draggable-el" className='w-full border-2 p-2 rounded-md bg-slate-100 h-full overflow-y-auto'>
           <h1 className='font-bold text-lg text-center'>Drag Event</h1>
           {events.map((event) => (
             <div
-              className='fc-event border-2 p-1 mt-2 w-full rounded-md ml-auto text-center bg-white'
+              className='fc-event border-2 p-1 mt-2 w-full rounded-md ml-auto text-center bg-white text-black'
               title={event.title}
               data-teacher={event.teacher}
               data-room={event.room}

@@ -3,10 +3,19 @@
 @tailwind components;
 @tailwind utilities;
 
-
 :root {
   --background: #ffffff;
   --foreground: #171717;
+  --calendar-bg: #ffffff;
+  --header-bg: #f8f9fa;
+  --event-bg: #4f46e5;
+  --event-border: #4338ca;
+  --today-bg: #e0e7ff;
+  --button-bg: #4f46e5;
+  --button-hover: #4338ca;
+  --button-active: #6366f1;
+  --monday-bg: #fee2e2;
+  --grid-lines: #e5e7eb;
 }
 
 @theme inline {
@@ -14,13 +23,6 @@
   --color-foreground: var(--foreground);
   --font-sans: var(--font-geist-sans);
   --font-mono: var(--font-geist-mono);
-}
-
-@media (prefers-color-scheme: dark) {
-  :root {
-    --background: #0a0a0a;
-    --foreground: #ededed;
-  }
 }
 
 body {
@@ -32,53 +34,38 @@ body {
 input {
   @apply px-2;
 }
-  .fc-header-toolbar {
-    display: inline-block;
-    padding: 4px 4px;
-    
-    @apply space-x-8;
+
+/* Calendar Container */
+.fc {
+  height: 100% !important;
+  background-color: var(--calendar-bg);
+  border-radius: 8px;
+  overflow: hidden;
+  box-shadow: 0 1px 3px rgba(0, 0, 0, 0.1);
 }
 
-.fc-day {
-  @apply m-8;
+/* Header Toolbar */
+.fc-header-toolbar {
+  display: inline-block;
+  padding: 12px 16px;
+  background-color: var(--header-bg);
+  @apply space-x-8;
 }
 
-.fc-scrollgrid-sync-table {
-  @apply w-full;
+.fc-view-harness {
+  height: 100% !important;
 }
 
 .fc-view {
-  @apply w-full h-full lg:h-3/4 xl:h-2/3 bg-white;
+  height: 100% !important;
+  background-color: var(--calendar-bg) !important;
+  @apply w-full h-full lg:h-3/4 xl:h-2/3;
 }
 
-.fc-h-event {
-  @apply bg-violet-500 border border-violet-600 ;
-  
-}
-
-.fc .fc-daygrid-day.fc-day-today {
-  @apply bg-violet-100 ;
-}
-
-.fc .fc-button{
-  @apply bg-violet-800 hover:bg-violet-900  ;
-}
-
-.fc .fc-button-primary:not(:disabled).fc-button-active {
-  @apply bg-violet-600;
-}
-
-.fc .fc-button-primary:disabled {
-  @apply bg-violet-600;
-}
-.fc-v-event {
-  @apply bg-violet-500 border border-violet-600 ;
-  
-}
-
-/* Add these rules to your globals.css */
+/* Time Grid Slots */
 .fc .fc-timegrid-slot {
-  height: 60px !important; /* Force all slots to same height */
+  height: 60px !important;
+  border-color: var(--grid-lines);
 }
 
 .fc .fc-timegrid-slots tr {
@@ -89,14 +76,73 @@ input {
   height: 60px !important;
 }
 
-.fc {
-  height: 100% !important;
+/* Day Headers */
+.fc-col-header-cell {
+  background-color: var(--header-bg);
+  padding: 8px 0;
+  font-weight: 600;
 }
 
-.fc-view-harness {
-  height: 100% !important;
+/* Monday Styling */
+.fc-day-mon .fc-timegrid-col-frame {
+  background-color: var(--monday-bg) !important;
 }
 
-.fc-view {
-  height: 100% !important;
+.fc .fc-col-header-cell.fc-day-mon {
+  background-color: var(--monday-bg) !important;
+}
+
+/* Events */
+.fc-h-event {
+  @apply bg-indigo-600 border border-indigo-700;
+  border-radius: 4px;
+}
+
+.fc-v-event {
+  @apply bg-indigo-600 border border-indigo-700;
+  border-radius: 4px;
+}
+
+/* Today Highlighting */
+.fc .fc-day-today {
+  @apply bg-indigo-50;
+}
+
+/* Buttons */
+.fc .fc-button {
+  @apply bg-indigo-600 hover:bg-indigo-700;
+  border: none;
+  border-radius: 4px;
+  padding: 6px 12px;
+  font-weight: 500;
+}
+
+.fc .fc-button-primary:not(:disabled).fc-button-active {
+  @apply bg-indigo-500;
+}
+
+.fc .fc-button-primary:disabled {
+  @apply bg-indigo-400;
+}
+
+/* Time labels */
+.fc-timegrid-axis {
+  font-size: 0.875rem;
+  color: #6b7280;
+}
+
+/* Grid lines */
+.fc-timegrid-divider {
+  padding: 0 !important;
+}
+
+/* Scroll area */
+.fc-scroller {
+  overflow-y: auto !important;
+}
+
+/* Day number */
+.fc-daygrid-day-number {
+  padding: 8px;
+  font-weight: 500;
 }

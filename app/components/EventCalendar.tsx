@@ -30,6 +30,36 @@ export const EventCalendar: React.FC<EventCalendarProps> = ({
     onEventDrop,
     onEventResize
 }) => {
+    // Helper function to snap times to the 7:30-based half-hour slots
+    const snapToHalfHour = (date: Date): Date => {
+        const roundedDate = new Date(date);
+        const hours = date.getHours();
+        const minutes = date.getMinutes();
+        
+        // If minutes are less than 15, snap to the previous :30
+        if (minutes < 15) {
+            if (hours === 0) {
+                // Special case: very early morning
+                roundedDate.setHours(0);
+                roundedDate.setMinutes(30, 0, 0);
+            } else {
+                roundedDate.setHours(hours - 1);
+                roundedDate.setMinutes(30, 0, 0);
+            }
+        } 
+        // If minutes are between 15 and 45, snap to the current hour's :30
+        else if (minutes >= 15 && minutes < 45) {
+            roundedDate.setMinutes(30, 0, 0);
+        } 
+        // If minutes are 45 or more, snap to the next hour's :30
+        else {
+            roundedDate.setHours(hours + 1);
+            roundedDate.setMinutes(30, 0, 0);
+        }
+        
+        return roundedDate;
+    };
+
     return (
         <FullCalendar
             {...calendarConfig}
@@ -42,15 +72,23 @@ export const EventCalendar: React.FC<EventCalendarProps> = ({
             eventResize={onEventResize}
             height="100%"
             eventResizeStart={(info) => {
+                // Apply half-hour snapping at the start of resize
                 if (info.event.start) {
-                    const startHour = info.event.start.getHours();
-                    const startMin = info.event.start.getMinutes();
-
-                    if (startMin !== 0) {
-                        const adjustedStart = new Date(info.event.start);
-                        adjustedStart.setMinutes(0, 0, 0);
-                        info.event.setStart(adjustedStart);
-                    }
+                    const snappedStart = snapToHalfHour(info.event.start);
+                    info.event.setStart(snappedStart);
+                }
+            }}
+            eventResizeStop={(info) => {
+                // Apply half-hour snapping at the end of resize
+                if (info.event.end) {
+                    const snappedEnd = snapToHalfHour(info.event.end);
+                    info.event.setEnd(snappedEnd);
+                }
+                
+                // Also ensure start time is on half-hour boundary
+                if (info.event.start) {
+                    const snappedStart = snapToHalfHour(info.event.start);
+                    info.event.setStart(snappedStart);
                 }
             }}
         />
