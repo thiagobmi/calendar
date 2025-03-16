@@ -6,26 +6,30 @@ export const formatEventTime = (date: Date) => {
 };
 
 export const createEventContent = (eventInfo: any) => {
-  console.log('Event info:', eventInfo.event);
-  console.log('Extended props:', eventInfo.event.extendedProps);
-
   const start = eventInfo.event.start;
   const end = eventInfo.event.end || new Date(start.getTime() + 60*60*1000);
   
-  // Use optional chaining to avoid errors if extendedProps is undefined
-  const teacher = eventInfo.event.teacher || '';
-  const room = eventInfo.event.room || '';
+  const teacher = eventInfo.event.extendedProps?.teacher;
+  const room = eventInfo.event.extendedProps?.room;
   
   const startTime = formatEventTime(start);
   const endTime = formatEventTime(end);
+  
+  // Check event duration in milliseconds
+  const durationMs = end.getTime() - start.getTime();
+  const durationHours = durationMs / (1000 * 60 * 60);
+  
+  // Only show additional details if event is long enough
+  // Events shorter than 1 hour will only show the title and time
+  const showDetails = durationHours > 1;
   
   return (
     <>
       <div className='text-center'>
         <b>{startTime} - {endTime}</b><br/>
         <b>{eventInfo.event.title}</b>
-        {teacher && <><br/><b>Teacher: {teacher}</b></>}
-        {room && <><br/><b>Room: {room}</b></>}
+        {showDetails && teacher && <><br/><b>{teacher}</b></>}
+        {showDetails && room && <><br/><b>{room}</b></>}
       </div>
     </>
   );

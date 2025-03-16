@@ -38,13 +38,12 @@ const [events, setEvents] = useState([
 
   const handleEventReceive = (info: any) => {
     console.log('Received event:', info.event);
-    console.log('Extended props:', info.event.extendedProps);
   
     const startDate = info.event.start || new Date();
     
     // Properly access extendedProps
-    const teacher = info.event.extendedProps?.teacher || '';
-    const room = info.event.extendedProps?.room || '';
+    const teacher = info.event.extendedProps.teacher || '';
+    const room = info.event.extendedProps.room || '';
     
     // Remove the original event
     info.event.remove();

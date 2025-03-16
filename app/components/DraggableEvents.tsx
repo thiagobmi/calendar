@@ -15,9 +15,10 @@ export const DraggableEvents: React.FC<DraggableEventsProps> = ({ events }) => {
                 eventData: function (eventEl) {
                     let title = eventEl.getAttribute("title");
                     let id = eventEl.getAttribute("data");
-                    let teacher = eventEl.getAttribute("teacher");
-                    let room = eventEl.getAttribute("room");
+                    let teacher = eventEl.dataset.teacher
+                    let room = eventEl.dataset.room
 
+                    console.log('Event data:', title, id, teacher, room);
                     const now = new Date();
                     now.setMinutes(0, 0, 0);
 
