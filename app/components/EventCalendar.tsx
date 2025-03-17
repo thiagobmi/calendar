@@ -23,13 +23,15 @@ interface EventCalendarProps {
     onEventReceive?: (info: any) => void;
     onEventDrop?: (info: any) => void;
     onEventResize?: (info: any) => void;
+    onEventClick?: (info: any) => void;
 }
 
 export const EventCalendar: React.FC<EventCalendarProps> = ({
     events,
     onEventReceive,
     onEventDrop,
-    onEventResize
+    onEventResize,
+    onEventClick
 }) => {
     // Helper function to snap times to the 7:30-based half-hour slots
     const snapToHalfHour = (date: Date): Date => {
@@ -71,6 +73,7 @@ export const EventCalendar: React.FC<EventCalendarProps> = ({
             eventReceive={onEventReceive}
             eventDrop={onEventDrop}
             eventResize={onEventResize}
+            eventClick={onEventClick}
             height="100%"
             eventResizeStart={(info) => {
                 // Apply half-hour snapping at the start of resize
@@ -92,6 +95,10 @@ export const EventCalendar: React.FC<EventCalendarProps> = ({
                     info.event.setStart(snappedStart);
                 }
             }}
+            eventConstraint={{
+                startTime: "07:30", // Limita eventos dentro do dia
+                endTime: "22:30",
+              }}
         />
     );
 };

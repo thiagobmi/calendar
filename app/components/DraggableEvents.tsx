@@ -1,4 +1,4 @@
-import React, { useEffect } from 'react';
+import React, { useEffect, useRef } from 'react';
 import { Draggable } from '@fullcalendar/interaction';
 
 interface DraggableEventsProps {
@@ -6,15 +6,21 @@ interface DraggableEventsProps {
 }
 
 export const DraggableEvents: React.FC<DraggableEventsProps> = ({ events }) => {
+    const draggableRef = useRef<Draggable | null>(null);
+
     useEffect(() => {
+        if (draggableRef.current) {
+            draggableRef.current.destroy();
+            draggableRef.current = null;
+        }
+        
         let draggable = document.getElementById('draggable-el');
         if (draggable) {
-            new Draggable(draggable, {
+            draggableRef.current = new Draggable(draggable, {
                 itemSelector: '.fc-event',
-
                 eventData: function (eventEl) {
                     let title = eventEl.getAttribute("title");
-                    let id = eventEl.getAttribute("data");
+                    let id = eventEl.getAttribute("data-id");
                     let teacher = eventEl.dataset.teacher;
                     let room = eventEl.dataset.room;
                     let backgroundColor = eventEl.dataset.color;
@@ -36,7 +42,14 @@ export const DraggableEvents: React.FC<DraggableEventsProps> = ({ events }) => {
                 }
             });
         }
-    }, []);
+        
+        return () => {
+            if (draggableRef.current) {
+                draggableRef.current.destroy();
+                draggableRef.current = null;
+            }
+        };
+    }, [events]); // Recria o draggable quando a lista de eventos mudar
 
     return (
         <div id="draggable-el" className='w-full border-2 p-2 rounded-md bg-gray-50 h-full overflow-y-auto'>
@@ -45,6 +58,7 @@ export const DraggableEvents: React.FC<DraggableEventsProps> = ({ events }) => {
             <div
               className='fc-event border-2 p-1 mt-2 w-full rounded-md ml-auto text-center'
               title={event.title}
+              data-id={event.id}
               data-teacher={event.teacher}
               data-room={event.room}
               data-color={event.backgroundColor}

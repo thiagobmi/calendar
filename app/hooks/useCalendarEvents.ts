@@ -12,21 +12,21 @@ interface Event {
 }
 
 export function useCalendarEvents() {
-const [events, setEvents] = useState([
-  { title: 'Cálculo 1', id: 1, room: '101', teacher: 'Prof. Silva', backgroundColor: '#ffcdd2' },
-  { title: 'Mat. Discreta', id: 2, room: '102', teacher: 'Prof. Souza', backgroundColor: '#bbdefb' },
-  { title: 'Cálculo 2', id: 3, room: '103', teacher: 'Prof. Lima', backgroundColor: '#c8e6c9' },
-  { title: 'Álgebra Linear', id: 4, room: '104', teacher: 'Prof. Costa', backgroundColor: '#fff9c4' },
-  { title: 'Física 1', id: 5, room: '105', teacher: 'Prof. Almeida', backgroundColor: '#e1bee7' },
-  { title: 'Física 2', id: 6, room: '106', teacher: 'Prof. Pereira', backgroundColor: '#b2dfdb' },
-  { title: 'Química', id: 7, room: '107', teacher: 'Prof. Fernandes', backgroundColor: '#ffe0b2' },
-  { title: 'Biologia', id: 8, room: '108', teacher: 'Prof. Oliveira', backgroundColor: '#d1c4e9' },
-  { title: 'História', id: 9, room: '109', teacher: 'Prof. Santos', backgroundColor: '#b3e5fc' },
-  { title: 'Geografia', id: 10, room: '110', teacher: 'Prof. Rodrigues', backgroundColor: '#f8bbd0' },
-]);
-
+  const [events, setEvents] = useState([
+    { title: 'Cálculo 1', id: 1, room: '101', teacher: 'Prof. Silva', backgroundColor: '#ffcdd2', start: new Date(), allDay: false },
+    { title: 'Mat. Discreta', id: 2, room: '102', teacher: 'Prof. Souza', backgroundColor: '#bbdefb', start: new Date(), allDay: false },
+    { title: 'Cálculo 2', id: 3, room: '103', teacher: 'Prof. Lima', backgroundColor: '#c8e6c9', start: new Date(), allDay: false },
+    { title: 'Álgebra Linear', id: 4, room: '104', teacher: 'Prof. Costa', backgroundColor: '#fff9c4', start: new Date(), allDay: false },
+    { title: 'Física 1', id: 5, room: '105', teacher: 'Prof. Almeida', backgroundColor: '#e1bee7', start: new Date(), allDay: false },
+    { title: 'Física 2', id: 6, room: '106', teacher: 'Prof. Pereira', backgroundColor: '#b2dfdb', start: new Date(), allDay: false },
+    { title: 'Química', id: 7, room: '107', teacher: 'Prof. Fernandes', backgroundColor: '#ffe0b2', start: new Date(), allDay: false },
+    { title: 'Biologia', id: 8, room: '108', teacher: 'Prof. Oliveira', backgroundColor: '#d1c4e9', start: new Date(), allDay: false },
+    { title: 'História', id: 9, room: '109', teacher: 'Prof. Santos', backgroundColor: '#b3e5fc', start: new Date(), allDay: false },
+    { title: 'Geografia', id: 10, room: '110', teacher: 'Prof. Rodrigues', backgroundColor: '#f8bbd0', start: new Date(), allDay: false },
+  ]);
 
   const [allEvents, setAllEvents] = useState<Event[]>([]);
+  const [availableEvents, setAvailableEvents] = useState<Event[]>([...events]);
   const [showmodal, setShowModal] = useState(false);
   const [showDeleteModal, setShowDeleteModal] = useState(false);
   const [idToDelete, setIdToDelete] = useState<number | null>(null);
@@ -73,25 +73,37 @@ const [events, setEvents] = useState([
     const room = info.event.extendedProps.room || '';
     const backgroundColor = info.event.backgroundColor || '';
     
-    // Remove the original event
+    // Get the original ID (important: make sure it's a number)
+    const originalId = parseInt(info.event.id);
+    
+    // Check if event already exists in allEvents to prevent duplicates
+    const eventExists = allEvents.some(event => event.id === originalId);
+    
+    if (!eventExists) {
+      const newEvent = {
+        id: originalId,
+        title: info.event.title,
+        start: snappedStart,
+        allDay: false,
+        teacher,
+        room,
+        backgroundColor,
+        borderColor: backgroundColor
+      };
+      
+      console.log('New event with props:', newEvent);
+      
+      // Add to calendar events
+      setAllEvents(prev => [...prev, newEvent]);
+      
+      // Remove from available events
+      setAvailableEvents(prev => prev.filter(event => event.id !== originalId));
+    }
+    
+    // Remove the temporary event created by FullCalendar during drag
     info.event.remove();
-    
-    const newEvent = {
-      id: Date.now(),
-      title: info.event.title,
-      start: snappedStart,
-      allDay: false,
-      teacher,
-      room,
-      backgroundColor,
-      borderColor: backgroundColor
-    };
-    
-    console.log('New event with props:', newEvent);
-    setAllEvents(prev => [...prev, newEvent]);
   };
 
-  
   const handleEventDrop = (info: any) => {
     // Enforce half-hour snapping on drop
     if (info.event.start) {
@@ -106,7 +118,6 @@ const [events, setEvents] = useState([
     
     // Update the event in state to persist the changes
     setAllEvents(prev => {
-      console.log(allEvents)
       return prev.map(event => {
         if (event.id === Number(info.event.id)) {
           return {
@@ -149,13 +160,40 @@ const [events, setEvents] = useState([
     });
   };
 
+  const handleEventClick = (info: any) => {
+    console.log('Event clicked:', info.event);
+    const eventId = Number(info.event.id);
+    
+    // Find the event in allEvents
+    const eventToDelete = allEvents.find(event => event.id === eventId);
+    
+    if (eventToDelete) {
+      // Remove from calendar
+      setAllEvents(prev => prev.filter(event => event.id !== eventId));
+      
+      // Find the original event from 'events' list
+      const originalEvent = events.find(event => event.id === eventId);
+      
+      if (originalEvent) {
+        // Check if it's already in availableEvents
+        const alreadyAvailable = availableEvents.some(event => event.id === eventId);
+        
+        if (!alreadyAvailable) {
+          // Return it to the available events
+          setAvailableEvents(prev => [...prev, originalEvent]);
+        }
+      }
+    }
+  };
 
   return {
     events,
     allEvents,
+    availableEvents,
     handleEventReceive,
     handleEventDrop,
     handleEventResize,
+    handleEventClick,
     showmodal,
     setShowModal,
     showDeleteModal,
