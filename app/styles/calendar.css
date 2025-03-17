@@ -1,0 +1,107 @@
+/* Estilos gerais */
+body {
+    font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, 'Helvetica Neue', Arial, 'Noto Sans',
+      sans-serif, 'Apple Color Emoji', 'Segoe UI Emoji', 'Segoe UI Symbol', 'Noto Color Emoji';
+    transition: background-color 0.3s ease, color 0.3s ease;
+  }
+  
+  /* Estilos do botão de toggle */
+  .toggle-dark-button {
+    color: inherit;
+    border: 0;
+    background: 0 0;
+    opacity: 0.8;
+    cursor: pointer;
+  }
+  
+  .toggle-dark-button svg {
+    width: 1.25rem;
+    height: 1.25rem;
+  }
+  
+  /* Variáveis para o modo claro */
+  :root {
+    --ec-border-color: #ddd;
+    --ec-event-border-color: rgba(0, 0, 0, 0.1);
+    --ec-today-bg-color: rgba(255, 220, 40, 0.15);
+    --ec-highlight-color: rgba(188, 232, 241, 0.3);
+    --ec-bg-event-color: rgba(108, 117, 125, 0.3);
+    --ec-text-color: #212529;
+    --ec-today-fg-color: #0a58ca;
+    --ec-button-hover-bg-color: #f0f0f0;
+  }
+  
+  /* Variáveis para o modo escuro */
+  .dark {
+    --ec-border-color: #444c56;
+    --ec-event-border-color: rgba(0, 0, 0, 0.2);
+    --ec-today-bg-color: rgba(255, 220, 40, 0.15);
+    --ec-highlight-color: rgba(188, 232, 241, 0.3);
+    --ec-bg-event-color: rgba(73, 80, 87, 0.3);
+    --ec-text-color: #adbac7;
+    --ec-today-fg-color: #539bf5;
+    --ec-button-hover-bg-color: #444c56;
+  }
+  
+  /* Estilos específicos do FullCalendar para o modo escuro */
+  .dark .fc {
+    --fc-border-color: var(--ec-border-color);
+    --fc-event-border-color: var(--ec-event-border-color);
+    --fc-today-bg-color: var(--ec-today-bg-color);
+    --fc-highlight-color: var(--ec-highlight-color);
+    --fc-bg-event-color: var(--ec-bg-event-color);
+    --fc-non-business-color: rgba(60, 60, 60, 0.3);
+    --fc-page-bg-color: #2d333b;
+    --fc-neutral-bg-color: #2d333b;
+    --fc-neutral-text-color: var(--ec-text-color);
+    --fc-today-button-text-color: var(--ec-today-fg-color);
+    --fc-button-hover-bg-color: var(--ec-button-hover-bg-color);
+    --fc-button-hover-border-color: var(--ec-border-color);
+    --fc-button-active-bg-color: #444c56;
+    --fc-button-active-border-color: var(--ec-border-color);
+    --fc-button-text-color: #adbac7;
+    --fc-button-bg-color: #2d333b;
+    --fc-button-border-color: var(--ec-border-color);
+    --fc-list-event-hover-bg-color: #3a3f47;
+  }
+  
+  /* Estilos específicos para o conteúdo do calendário no modo escuro */
+  .dark .fc-view-harness,
+  .dark .fc-scrollgrid,
+  .dark .fc-scrollgrid-section > td {
+    background-color: #2d333b;
+  }
+  
+  .dark .fc-col-header-cell {
+    background-color: #2d333b;
+    color: #adbac7;
+  }
+  
+  .dark .fc-timegrid-slot-label {
+    color: #adbac7;
+  }
+  
+  .dark .fc-timegrid-axis {
+    background-color: #2d333b;
+    color: #adbac7;
+  }
+  
+  .dark .fc-timegrid-now-indicator-line {
+    border-color: #539bf5;
+  }
+  
+  .dark .fc-timegrid-now-indicator-arrow {
+    border-color: #539bf5;
+    color: #539bf5;
+  }
+  
+  /* Estilos para o componente DraggableEvents no modo escuro */
+  .dark #draggable-el {
+    background-color: #2d333b;
+    border-color: #444c56;
+    color: #adbac7;
+  }
+  
+  .dark .fc-event {
+    border-color: var(--ec-event-border-color);
+  }

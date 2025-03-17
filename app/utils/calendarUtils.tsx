@@ -25,7 +25,7 @@ export const createEventContent = (eventInfo: any) => {
   
   // Get background color from the event (fallback to white if not set)
   const backgroundColor = eventInfo.event.backgroundColor || '#ffffff';
-  const textColor = '#000000'; // Always use black text for better readability
+  const textColor = '#333333'; // Always use black text for better readability
   
   return (
     <div className='text-center w-full h-full p-1' style={{ backgroundColor, color: textColor }}>

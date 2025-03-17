@@ -8,7 +8,6 @@ export const calendarConfig: CalendarOptions = {
     right: 'listWeek,timeGridWeek'
   },
   dayHeaderFormat: { weekday: 'short' },
-  nowIndicator: false,
   editable: true,
   selectable: false,
   selectMirror: true,
@@ -30,17 +29,21 @@ export const calendarConfig: CalendarOptions = {
   
   // Additional constraints for time snapping
   eventDurationEditable: true,
-
+  nowIndicator:false,
   eventTimeFormat: {
     hour: '2-digit',
     minute: '2-digit',
     meridiem: false,
     hour12: false
   },
-  eventStartEditable:true,
-
-
-
-
-
+  eventStartEditable: true,
+  
+  // Add event constraints
+  eventConstraint: {
+    startTime: "07:30",
+    endTime: "22:30",
+  },
+  
+  // Add drag scroll capability
+  dragScroll: true,
 };
