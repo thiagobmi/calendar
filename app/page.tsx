@@ -33,7 +33,7 @@ export default function Home() {
   }, []);
   
   return (
-    <div className="flex flex-col h-screen bg-white dark:bg-gray-900">
+    <div className="flex flex-col h-screen bg-gray-600">
       <CalendarHeader />
       
       <main className="flex-1 px-4 pt-0 pb-8 transition-colors h-[calc(100vh-5rem)] overflow-y-hidden">
@@ -45,7 +45,7 @@ export default function Home() {
           
           {/* Calendário */}
           <div className="flex-grow">
-            <div className="bg-white dark:bg-gray-800 border border-gray-200 dark:border-gray-700 rounded-lg shadow-md h-full overflow-hidden">
+            <div className="bg-white dark:bg-gray-800 border border-gray-200 dark:border-gray-700 rounded-sm shadow-md h-full overflow-hidden">
               <EventCalendar
                 events={allEvents}
                 onEventReceive={handleEventReceive}

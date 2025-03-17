@@ -1,44 +1,55 @@
 import { useState, useEffect } from 'react';
 
 export function useDarkMode() {
-  const [darkMode, setDarkMode] = useState(false);
+  // Initialize state from localStorage or system preference
+  const [darkMode, setDarkMode] = useState(() => {
+    // Check if we're in the browser environment
+    if (typeof window === 'undefined') return false;
+    
+    // Check localStorage first
+    const savedPreference = localStorage.getItem('darkMode');
+    if (savedPreference !== null) {
+      return savedPreference === 'true';
+    }
+    // Fall back to system preference
+    return window.matchMedia('(prefers-color-scheme: dark)').matches;
+  });
 
-  // Função para alternar entre os modos
+  // Toggle function
   const toggleDarkMode = () => {
     setDarkMode(prevMode => !prevMode);
   };
 
-  // Atualiza o DOM quando o modo escuro muda
+  // Apply dark mode changes to DOM
   useEffect(() => {
-    const updateTheme = () => {
-      if (darkMode) {
-        document.documentElement.classList.add('dark');
-        document.body.classList.add('ec-dark');
-        document.body.style.backgroundColor = '#22272e';
-        document.body.style.color = '#adbac7';
-      } else {
-        document.documentElement.classList.remove('dark');
-        document.body.classList.remove('ec-dark');
-        document.body.style.backgroundColor = '#ffffff';
-        document.body.style.color = '#212529';
+    if (typeof window === 'undefined') return;
+    
+    // Apply dark mode class to html element for your CSS variables
+    if (darkMode) {
+      document.documentElement.classList.add('dark');
+    } else {
+      document.documentElement.classList.remove('dark');
+    }
+
+    // Save preference to localStorage
+    localStorage.setItem('darkMode', darkMode.toString());
+  }, [darkMode]);
+
+  // Listen for system preference changes
+  useEffect(() => {
+    if (typeof window === 'undefined') return;
+    
+    const mediaQuery = window.matchMedia('(prefers-color-scheme: dark)');
+    
+    const handleChange = (e: MediaQueryListEvent) => {
+      // Only update if user hasn't explicitly set a preference
+      if (localStorage.getItem('darkMode') === null) {
+        setDarkMode(e.matches);
       }
     };
 
-    updateTheme();
-  }, [darkMode]);
-
-  // Detecta a preferência do sistema ao montar o componente
-  useEffect(() => {
-    const prefersDark = window.matchMedia('(prefers-color-scheme: dark)').matches;
-    setDarkMode(prefersDark);
-
-    // Adiciona listener para mudanças na preferência do sistema
-    const mediaQuery = window.matchMedia('(prefers-color-scheme: dark)');
-    const handleChange = (e: MediaQueryListEvent) => {
-      setDarkMode(e.matches);
-    };
-
     mediaQuery.addEventListener('change', handleChange);
+    
     return () => {
       mediaQuery.removeEventListener('change', handleChange);
     };
