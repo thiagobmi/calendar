@@ -13,16 +13,16 @@ interface Event {
 
 export function useCalendarEvents() {
   const [events, setEvents] = useState([
-    { title: 'Cálculo 1', id: 1, room: '101', teacher: 'Prof. Silva', backgroundColor: '#ffcdd2', start: new Date(), allDay: false },
-    { title: 'Mat. Discreta', id: 2, room: '102', teacher: 'Prof. Souza', backgroundColor: '#bbdefb', start: new Date(), allDay: false },
-    { title: 'Cálculo 2', id: 3, room: '103', teacher: 'Prof. Lima', backgroundColor: '#c8e6c9', start: new Date(), allDay: false },
-    { title: 'Álgebra Linear', id: 4, room: '104', teacher: 'Prof. Costa', backgroundColor: '#fff9c4', start: new Date(), allDay: false },
-    { title: 'Física 1', id: 5, room: '105', teacher: 'Prof. Almeida', backgroundColor: '#e1bee7', start: new Date(), allDay: false },
-    { title: 'Física 2', id: 6, room: '106', teacher: 'Prof. Pereira', backgroundColor: '#b2dfdb', start: new Date(), allDay: false },
-    { title: 'Química', id: 7, room: '107', teacher: 'Prof. Fernandes', backgroundColor: '#ffe0b2', start: new Date(), allDay: false },
-    { title: 'Biologia', id: 8, room: '108', teacher: 'Prof. Oliveira', backgroundColor: '#d1c4e9', start: new Date(), allDay: false },
-    { title: 'História', id: 9, room: '109', teacher: 'Prof. Santos', backgroundColor: '#b3e5fc', start: new Date(), allDay: false },
-    { title: 'Geografia', id: 10, room: '110', teacher: 'Prof. Rodrigues', backgroundColor: '#f8bbd0', start: new Date(), allDay: false },
+    { title: 'Cálculo 1', id: 1, room: '101', teacher: 'Prof. Celso', backgroundColor: '#ffcdd2', start: new Date(), allDay: false },
+    { title: 'Mat. Discreta', id: 2, room: '102', teacher: 'Prof. Thielo', backgroundColor: '#bbdefb', start: new Date(), allDay: false },
+    { title: 'Cálculo 2', id: 3, room: '103', teacher: 'Prof. Amanda', backgroundColor: '#c8e6c9', start: new Date(), allDay: false },
+    { title: 'Álgebra Linear', id: 4, room: '104', teacher: 'Prof. Paulo', backgroundColor: '#fff9c4', start: new Date(), allDay: false },
+    { title: 'Física 1', id: 5, room: '105', teacher: 'Prof. Thielo', backgroundColor: '#e1bee7', start: new Date(), allDay: false },
+    { title: 'Física 2', id: 6, room: '106', teacher: 'Prof. Celso', backgroundColor: '#b2dfdb', start: new Date(), allDay: false },
+    { title: 'Química', id: 7, room: '107', teacher: 'Prof. Aline', backgroundColor: '#ffe0b2', start: new Date(), allDay: false },
+    { title: 'Biologia', id: 8, room: '108', teacher: 'Prof. Marcelo', backgroundColor: '#d1c4e9', start: new Date(), allDay: false },
+    { title: 'História', id: 9, room: '109', teacher: 'Prof. Basso', backgroundColor: '#b3e5fc', start: new Date(), allDay: false },
+    { title: 'Geografia', id: 10, room: '110', teacher: 'Prof. Dionatan', backgroundColor: '#f8bbd0', start: new Date(), allDay: false },
   ]);
 
   const [allEvents, setAllEvents] = useState<Event[]>([]);

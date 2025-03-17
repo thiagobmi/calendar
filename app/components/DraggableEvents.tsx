@@ -25,7 +25,6 @@ export const DraggableEvents: React.FC<DraggableEventsProps> = ({ events }) => {
                     let room = eventEl.dataset.room;
                     let backgroundColor = eventEl.dataset.color;
 
-                    console.log('Event data:', title, id, teacher, room, backgroundColor);
                     const now = new Date();
                     now.setMinutes(0, 0, 0);
 
@@ -49,25 +48,45 @@ export const DraggableEvents: React.FC<DraggableEventsProps> = ({ events }) => {
                 draggableRef.current = null;
             }
         };
-    }, [events]); // Recria o draggable quando a lista de eventos mudar
+    }, [events]);
 
     return (
-        <div id="draggable-el" className='w-full border-2 p-2 rounded-md bg-gray-50 h-full overflow-y-auto'>
-          <h1 className='font-bold text-lg text-center'>Disciplinas</h1>
-          {events.map((event) => (
-            <div
-              className='fc-event border-2 p-1 mt-2 w-full rounded-md ml-auto text-center'
-              title={event.title}
-              data-id={event.id}
-              data-teacher={event.teacher}
-              data-room={event.room}
-              data-color={event.backgroundColor}
-              key={event.id}
-              style={{ backgroundColor: event.backgroundColor || '#ffffff', color: '#000000', borderColor: event.backgroundColor || '#cccccc' }}
-            >
-              {event.title}
+        <div className="flex flex-col h-full">
+            <div className="bg-indigo-600 dark:bg-indigo-700 text-white p-4 rounded-t-lg shadow-md">
+                <h2 className="font-bold text-lg text-center">Disciplinas</h2>
+                <p className="text-xs text-center mt-1 text-indigo-100">Arraste para o calendário</p>
             </div>
-          ))}
+            
+            <div id="draggable-el" className="flex-grow overflow-y-auto p-3 bg-white dark:bg-gray-800 border border-gray-200 dark:border-gray-700 rounded-b-lg shadow-md">
+                {events.length === 0 ? (
+                    <div className="text-center py-4 text-gray-500 dark:text-gray-400 italic">
+                        Todas as disciplinas foram adicionadas ao calendário
+                    </div>
+                ) : (
+                    events.map((event) => (
+                        <div
+                            className="fc-event mb-3 p-2 rounded-md shadow-sm cursor-move hover:shadow-md transition-shadow duration-200 flex flex-col"
+                            title={event.title}
+                            data-id={event.id}
+                            data-teacher={event.teacher}
+                            data-room={event.room}
+                            data-color={event.backgroundColor}
+                            key={event.id}
+                            style={{ 
+                                backgroundColor: event.backgroundColor || '#ffffff', 
+                                color: '#000000', 
+                                borderLeft: `4px solid ${event.backgroundColor || '#cccccc'}`
+                            }}
+                        >
+                            <span className="font-medium">{event.title}</span>
+                            <div className="flex justify-between mt-1 text-xs text-gray-700">
+                                <span>{event.teacher}</span>
+                                <span>Sala {event.room}</span>
+                            </div>
+                        </div>
+                    ))
+                )}
+            </div>
         </div>
-      );
+    );
 };

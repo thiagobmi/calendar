@@ -231,3 +231,48 @@ input {
   color: var(--foreground);
   transition: background-color 0.3s ease, color 0.3s ease;
 }
+
+/* Adicionar no app/globals.css */
+
+/* Estilos para a sidebar */
+#draggable-el {
+  transition: background-color 0.3s ease, border-color 0.3s ease;
+  scrollbar-width: thin;
+  scrollbar-color: var(--scrollbar-thumb) var(--scrollbar-track);
+}
+
+#draggable-el::-webkit-scrollbar {
+  width: 6px;
+}
+
+#draggable-el::-webkit-scrollbar-track {
+  background: var(--scrollbar-track);
+  border-radius: 6px;
+}
+
+#draggable-el::-webkit-scrollbar-thumb {
+  background-color: var(--scrollbar-thumb);
+  border-radius: 6px;
+}
+
+/* Animação para os eventos arrastáveis */
+.fc-event {
+  transition: transform 0.2s ease, box-shadow 0.2s ease;
+}
+
+.fc-event:hover {
+  transform: translateY(-2px);
+}
+
+/* Melhorias para o header */
+.toggle-dark-button {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transition: background-color 0.3s ease;
+}
+
+/* Corrigir a cor do texto do Header */
+.dark h1 {
+  color: var(--foreground);
+}

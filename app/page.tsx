@@ -33,21 +33,27 @@ export default function Home() {
   }, []);
   
   return (
-    <div className="flex flex-col h-screen">
+    <div className="flex flex-col h-screen bg-white dark:bg-gray-900">
       <CalendarHeader />
-      <main className="flex-1 px-4 pt-0 pb-8 transition-colors">
-        <div className="grid grid-cols-12 w-full gap-4 h-[calc(100%-2rem)]">
-          <div className="col-span-10 h-full">
-            <EventCalendar
-              events={allEvents}
-              onEventReceive={handleEventReceive}
-              onEventDrop={handleEventDrop}
-              onEventResize={handleEventResize}
-              onEventClick={handleEventClick}
-            />
-          </div>
-          <div className="col-span-2 h-full">
+      
+      <main className="flex-1 px-4 pt-0 pb-8 transition-colors h-[calc(100vh-5rem)] overflow-y-hidden">
+        <div className="flex h-full gap-4">
+          {/* Sidebar (agora à esquerda) */}
+          <div className="w-72 h-full">
             <DraggableEvents events={availableEvents} />
+          </div>
+          
+          {/* Calendário */}
+          <div className="flex-grow">
+            <div className="bg-white dark:bg-gray-800 border border-gray-200 dark:border-gray-700 rounded-lg shadow-md h-full overflow-hidden">
+              <EventCalendar
+                events={allEvents}
+                onEventReceive={handleEventReceive}
+                onEventDrop={handleEventDrop}
+                onEventResize={handleEventResize}
+                onEventClick={handleEventClick}
+              />
+            </div>
           </div>
         </div>
       </main>
