@@ -23,14 +23,16 @@ export const createEventContent = (eventInfo: any) => {
   // Events shorter than 1 hour will only show the title and time
   const showDetails = durationHours > 1;
   
+  // Get background color from the event (fallback to white if not set)
+  const backgroundColor = eventInfo.event.backgroundColor || '#ffffff';
+  const textColor = '#000000'; // Always use black text for better readability
+  
   return (
-    <>
-      <div className='text-center'>
-        <b>{startTime} - {endTime}</b><br/>
-        <b>{eventInfo.event.title}</b>
-        {showDetails && teacher && <><br/><b>{teacher}</b></>}
-        {showDetails && room && <><br/><b>{room}</b></>}
-      </div>
-    </>
+    <div className='text-center w-full h-full p-1' style={{ backgroundColor, color: textColor }}>
+      <b>{startTime} - {endTime}</b><br/>
+      <b>{eventInfo.event.title}</b>
+      {showDetails && teacher && <><br/><b>{teacher}</b></>}
+      {showDetails && room && <><br/><b>{room}</b></>}
+    </div>
   );
 };

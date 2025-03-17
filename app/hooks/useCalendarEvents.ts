@@ -8,21 +8,23 @@ interface Event {
   teacher?: string;
   id: number;
   end?: Date | string;
+  backgroundColor?: string;
 }
 
 export function useCalendarEvents() {
 const [events, setEvents] = useState([
-  { title: 'Cálculo 1', id: 1, room: '101', teacher: 'Prof. Silva' },
-  { title: 'Mat. Discreta', id: 2, room: '102', teacher: 'Prof. Souza' },
-  { title: 'Cálculo 2', id: 3, room: '103', teacher: 'Prof. Lima' },
-  { title: 'Álgebra Linear', id: 4, room: '104', teacher: 'Prof. Costa' },
-  { title: 'Física 1', id: 5, room: '105', teacher: 'Prof. Almeida' },
-  { title: 'Física 2', id: 6, room: '106', teacher: 'Prof. Pereira' },
-  { title: 'Química', id: 7, room: '107', teacher: 'Prof. Fernandes' },
-  { title: 'Biologia', id: 8, room: '108', teacher: 'Prof. Oliveira' },
-  { title: 'História', id: 9, room: '109', teacher: 'Prof. Santos' },
-  { title: 'Geografia', id: 10, room: '110', teacher: 'Prof. Rodrigues' },
+  { title: 'Cálculo 1', id: 1, room: '101', teacher: 'Prof. Silva', backgroundColor: '#ffcdd2' },
+  { title: 'Mat. Discreta', id: 2, room: '102', teacher: 'Prof. Souza', backgroundColor: '#bbdefb' },
+  { title: 'Cálculo 2', id: 3, room: '103', teacher: 'Prof. Lima', backgroundColor: '#c8e6c9' },
+  { title: 'Álgebra Linear', id: 4, room: '104', teacher: 'Prof. Costa', backgroundColor: '#fff9c4' },
+  { title: 'Física 1', id: 5, room: '105', teacher: 'Prof. Almeida', backgroundColor: '#e1bee7' },
+  { title: 'Física 2', id: 6, room: '106', teacher: 'Prof. Pereira', backgroundColor: '#b2dfdb' },
+  { title: 'Química', id: 7, room: '107', teacher: 'Prof. Fernandes', backgroundColor: '#ffe0b2' },
+  { title: 'Biologia', id: 8, room: '108', teacher: 'Prof. Oliveira', backgroundColor: '#d1c4e9' },
+  { title: 'História', id: 9, room: '109', teacher: 'Prof. Santos', backgroundColor: '#b3e5fc' },
+  { title: 'Geografia', id: 10, room: '110', teacher: 'Prof. Rodrigues', backgroundColor: '#f8bbd0' },
 ]);
+
 
   const [allEvents, setAllEvents] = useState<Event[]>([]);
   const [showmodal, setShowModal] = useState(false);
@@ -69,6 +71,7 @@ const [events, setEvents] = useState([
     // Properly access extendedProps
     const teacher = info.event.extendedProps.teacher || '';
     const room = info.event.extendedProps.room || '';
+    const backgroundColor = info.event.backgroundColor || '';
     
     // Remove the original event
     info.event.remove();
@@ -79,13 +82,16 @@ const [events, setEvents] = useState([
       start: snappedStart,
       allDay: false,
       teacher,
-      room
+      room,
+      backgroundColor,
+      borderColor: backgroundColor
     };
     
     console.log('New event with props:', newEvent);
     setAllEvents(prev => [...prev, newEvent]);
   };
 
+  
   const handleEventDrop = (info: any) => {
     // Enforce half-hour snapping on drop
     if (info.event.start) {
@@ -98,7 +104,20 @@ const [events, setEvents] = useState([
       info.event.setEnd(snappedEnd);
     }
     
-    console.log('Event moved:', info.event.start, info.event.end);
+    // Update the event in state to persist the changes
+    setAllEvents(prev => {
+      console.log(allEvents)
+      return prev.map(event => {
+        if (event.id === Number(info.event.id)) {
+          return {
+            ...event,
+            start: info.event.start,
+            end: info.event.end
+          };
+        }
+        return event;
+      });
+    });
   };
 
   const handleEventResize = (info: any) => {

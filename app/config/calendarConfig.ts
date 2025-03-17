@@ -5,10 +5,10 @@ export const calendarConfig: CalendarOptions = {
   headerToolbar: {
     left: '',
     center: 'title',
-    right: ''
+    right: 'listWeek,timeGridWeek'
   },
   dayHeaderFormat: { weekday: 'short' },
-  nowIndicator: true,
+  nowIndicator: false,
   editable: true,
   selectable: false,
   selectMirror: true,
@@ -16,11 +16,9 @@ export const calendarConfig: CalendarOptions = {
   slotMinTime: "07:30:00",
   slotMaxTime: "22:30:00",
   allDaySlot: false,
-  
   displayEventTime: true,
   displayEventEnd: true,
   titleFormat: () => 'Agenda Semanal',
-  
   // Update snap duration to 1 hour to match the 7:30, 8:30 pattern
   snapDuration: "01:00:00", 
   slotDuration: "01:00:00", 
@@ -39,24 +37,10 @@ export const calendarConfig: CalendarOptions = {
     meridiem: false,
     hour12: false
   },
-  
-  // Add this to style Monday columns red
-  slotLabelDidMount: (arg) => {
-    // This affects the time labels on the left
-  },
-  
-  // This will target the day columns
-  datesSet: (dateInfo) => {
-    // Wait for DOM to be ready
-    setTimeout(() => {
-      // Find all Monday columns
-      const mondayCells = document.querySelectorAll('.fc-day.fc-day-mon');
-      mondayCells.forEach((cell, index) => {
-        if (index > 2) {
-          // Change background color to red
-          (cell as HTMLElement).style.backgroundColor = '#ffdddd';
-        }
-      });
-    }, 0);
-  }
+  eventStartEditable:true,
+
+
+
+
+
 };

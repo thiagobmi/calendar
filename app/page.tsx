@@ -19,6 +19,8 @@ export default function Home() {
     handleEventResize
   } = useCalendarEvents();
 
+
+  
   return (
     <div className="flex flex-col h-screen">
       <CalendarHeader />

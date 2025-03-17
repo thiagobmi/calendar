@@ -2,6 +2,7 @@ import React from 'react';
 import FullCalendar from '@fullcalendar/react';
 import dayGridPlugin from '@fullcalendar/daygrid';
 import timeGridPlugin from '@fullcalendar/timegrid';
+import listPlugin from '@fullcalendar/list';
 import interactionPlugin from '@fullcalendar/interaction';
 import ptBrLocale from '@fullcalendar/core/locales/pt-br';
 import { calendarConfig } from '@/app/config/calendarConfig';
@@ -63,7 +64,7 @@ export const EventCalendar: React.FC<EventCalendarProps> = ({
     return (
         <FullCalendar
             {...calendarConfig}
-            plugins={[dayGridPlugin, interactionPlugin, timeGridPlugin]}
+            plugins={[interactionPlugin, timeGridPlugin, listPlugin]}
             locale={ptBrLocale}
             events={events}
             eventContent={createEventContent}

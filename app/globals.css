@@ -14,7 +14,6 @@
   --button-bg: #4f46e5;
   --button-hover: #4338ca;
   --button-active: #6366f1;
-  --monday-bg: #fee2e2;
   --grid-lines: #e5e7eb;
 }
 
@@ -83,14 +82,6 @@ input {
   font-weight: 600;
 }
 
-/* Monday Styling */
-.fc-day-mon .fc-timegrid-col-frame {
-  background-color: var(--monday-bg) !important;
-}
-
-.fc .fc-col-header-cell.fc-day-mon {
-  background-color: var(--monday-bg) !important;
-}
 
 /* Events */
 .fc-h-event {
