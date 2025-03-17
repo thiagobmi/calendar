@@ -1,0 +1,29 @@
+@import 'tailwindcss';
+@plugin '@tailwindcss/forms';
+@plugin '@tailwindcss/typography';
+
+/* Make day of week headers bold */
+.ec-day time {
+    font-weight: bold !important;
+  }
+  
+  /* Make time slots bold */
+  .ec-time-label span {
+    font-weight: bold !important;
+  }
+  
+  /* Or target more generally */
+  .ec-day time,
+  .ec-time-label span {
+    font-weight: bold !important;
+  }
+
+  /* .ec-time{
+    font-weight: bold !important;
+  } */
+
+  /* Alternative selector if the above doesn't work */
+    .ec-toolbar {
+    font-size: 1.5rem !important;
+    font-weight: bold !important;
+  }
