@@ -69,6 +69,7 @@ export const EventCalendar: React.FC<EventCalendarProps> = ({
             plugins={[interactionPlugin, timeGridPlugin, listPlugin]}
             locale={ptBrLocale}
             events={events}
+            slotEventOverlap={false} // Evita sobreposição de eventos
             eventContent={createEventContent}
             eventReceive={onEventReceive}
             eventDrop={onEventDrop}

@@ -37,6 +37,7 @@ export const calendarConfig: CalendarOptions = {
     hour12: false
   },
   eventStartEditable: true,
+
   
   // Add event constraints
   eventConstraint: {

@@ -52,7 +52,7 @@ export const DraggableEvents: React.FC<DraggableEventsProps> = ({ events }) => {
 
     return (
         <div className="flex flex-col h-full">
-            <div className="bg-indigo-600 dark:bg-indigo-700 text-white p-4 rounded-t-lg shadow-md">
+            <div className="bg-indigo-600 dark:bg-indigo-700 text-white p-2 rounded-t-lg shadow-md">
                 <h2 className="font-bold text-lg text-center">Disciplinas</h2>
                 <p className="text-xs text-center mt-1 text-indigo-100">Arraste para o calendário</p>
             </div>
