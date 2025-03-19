@@ -5,7 +5,7 @@ export const calendarConfig: CalendarOptions = {
   headerToolbar: {
     left: '',
     center: 'title',
-    right: 'listWeek,timeGridWeek'
+    right: 'timeGridWeek,dayGridWeek,listWeek'
   },
   dayHeaderFormat: { weekday: 'short' },
   editable: true,
@@ -17,6 +17,11 @@ export const calendarConfig: CalendarOptions = {
   allDaySlot: false,
   displayEventTime: true,
   displayEventEnd: true,
+  // Change the text that appeats on daygridweek button
+  buttonText: {
+    dayGridWeek: 'Agenda Semanal'
+  },
+
   titleFormat: () => 'Agenda Semanal',
   // Update snap duration to 1 hour to match the 7:30, 8:30 pattern
   snapDuration: "01:00:00", 
