@@ -2,11 +2,12 @@ import { CalendarOptions } from '@fullcalendar/core';
 
 export const calendarConfig: CalendarOptions = {
   initialView: "timeGridWeek",
-  headerToolbar: {
-    left: '',
-    center: 'title',
-    right: 'timeGridWeek,dayGridWeek,listWeek'
-  },
+  headerToolbar: false,
+  // headerToolbar: {
+  //   left: '',
+  //   center: 'title',
+  //   right: 'timeGridWeek,dayGridWeek,listWeek'
+  // },
   dayHeaderFormat: { weekday: 'short' },
   editable: true,
   selectable: false,
